@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7Lz-IE-S6I">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--CHZLogView-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sYA-V1-Aut">
+                                <rect key="frame" x="132" y="104" width="150" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="cRA-yM-9XG"/>
+                                    <constraint firstAttribute="height" constant="40" id="kxd-pX-p6s"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="FirstViewController"/>
+                                <connections>
+                                    <action selector="gotoFirstViewController:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cMh-Gu-4ez"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMA-To-V8c">
+                                <rect key="frame" x="122" y="164" width="170" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="41B-de-OiY"/>
+                                    <constraint firstAttribute="width" constant="170" id="o83-nx-ur7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="SecondViewController"/>
+                                <connections>
+                                    <action selector="gotoSecondViewController:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Uaa-aA-Ib3"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="cMA-To-V8c" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2l9-JF-gXl"/>
+                            <constraint firstItem="sYA-V1-Aut" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4vH-OH-QIe"/>
+                            <constraint firstItem="cMA-To-V8c" firstAttribute="top" secondItem="sYA-V1-Aut" secondAttribute="bottom" constant="20" id="h4o-u9-aFg"/>
+                            <constraint firstItem="sYA-V1-Aut" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="qAO-fh-Oft"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="CHZLogView" id="BCh-eZ-3Ah"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-200" y="95"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="t7z-xR-mR2">
+            <objects>
+                <navigationController id="7Lz-IE-S6I" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gIh-vj-s4F">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="3QQ-cS-teN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lIk-wX-ksj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1033" y="95"/>
+        </scene>
+    </scenes>
+</document>
