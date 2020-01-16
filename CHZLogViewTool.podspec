@@ -1,12 +1,12 @@
 #
-#  Be sure to run `pod spec lint CHZLogView.podspec' to ensure this is a
+#  Be sure to run `pod spec lint CHZLogViewTool.podspec' to ensure this is a
 #  valid spec and to remove all comments including this before submitting the spec.
 #
-#  To learn more about Podspec attributes see https://guides.cocoapods.org/syntax/podspec.html
+#  To learn more about Podspec attributes see http://docs.cocoapods.org/specification.html
 #  To see working Podspecs in the CocoaPods repo see https://github.com/CocoaPods/Specs/
 #
 
-Pod::Spec.new do |spec|
+Pod::Spec.new do |s|
 
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -15,32 +15,32 @@ Pod::Spec.new do |spec|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  spec.name         = "CHZLogView"
-  spec.version      = "0.0.1"
-  spec.summary      = "Print and view logs on your APP easily."
+  s.name         = "CHZLogViewTool"
+  s.version      = "0.0.1"
+  s.summary      = "Print and view logs on App easily"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = <<-DESC
-  An easy-to-use log printer on APP. Print and view logs on your APP easily.
-                    DESC
+  s.description  = <<-DESC
+Print and view logs on App easily.
+                   DESC
 
-  spec.homepage     = "https://github.com/Wymann/CHZLogView"
-  # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
+  s.homepage     = "https://github.com/Wymann/CHZLogView"
+  # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
-  #  Licensing your code is important. See https://choosealicense.com for more info.
+  #  Licensing your code is important. See http://choosealicense.com for more info.
   #  CocoaPods will detect a license file if there is a named LICENSE*
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  spec.license      = "MIT"
-  # spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+  s.license      = "MIT"
+  # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -53,10 +53,10 @@ Pod::Spec.new do |spec|
   #  profile URL.
   #
 
-  spec.author             = { "OwenChan" => "wymannchan@163.com" }
-  # Or just: spec.author    = "OwenChan"
-  # spec.authors            = { "OwenChan" => "wymannchan@163.com" }
-  # spec.social_media_url   = "https://twitter.com/OwenChan"
+  s.author             = { "Wyman Chen" => "wymannchan@163.com" }
+  # Or just: s.author    = "Wyman Chen"
+  # s.authors            = { "Wyman Chen" => "wymannchan@163.com" }
+  # s.social_media_url   = "http://twitter.com/Wyman Chen"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -64,14 +64,14 @@ Pod::Spec.new do |spec|
   #  the deployment target. You can optionally include the target after the platform.
   #
 
-  spec.platform     = :ios
-  spec.platform     = :ios, "10.0"
+  s.platform     = :ios
+  # s.platform     = :ios, "5.0"
 
   #  When using multiple platforms
-  # spec.ios.deployment_target = "5.0"
-  # spec.osx.deployment_target = "10.7"
-  # spec.watchos.deployment_target = "2.0"
-  # spec.tvos.deployment_target = "9.0"
+  s.ios.deployment_target = "7.0"
+  # s.osx.deployment_target = "10.7"
+  # s.watchos.deployment_target = "2.0"
+  # s.tvos.deployment_target = "9.0"
 
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -80,7 +80,7 @@ Pod::Spec.new do |spec|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  spec.source       = { :git => "https://github.com/Wymann/CHZLogView.git", :tag => "#{spec.version}" }
+  s.source       = { :git => "https://github.com/Wymann/CHZLogView.git", :tag => "#{s.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -91,10 +91,10 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "CHZLogView/*.{h,m}"
-  # spec.exclude_files = "Classes/Exclude"
+  s.source_files  = "CHZLogViewTool/*.{h,m}"
+  s.exclude_files = "Classes/Exclude"
 
-  # spec.public_header_files = "Classes/**/*.h"
+  # s.public_header_files = "Classes/**/*.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -105,10 +105,10 @@ Pod::Spec.new do |spec|
   #  non-essential files like tests, examples and documentation.
   #
 
-  # spec.resource  = "icon.png"
-  # spec.resources = "Resources/*.png"
+  # s.resource  = "icon.png"
+  # s.resources = "Resources/*.png"
 
-  # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
+  # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -117,11 +117,11 @@ Pod::Spec.new do |spec|
   #  the lib prefix of their name.
   #
 
-  # spec.framework  = "SomeFramework"
-  # spec.frameworks = "SomeFramework", "AnotherFramework"
+  # s.framework  = "SomeFramework"
+  # s.frameworks = "SomeFramework", "AnotherFramework"
 
-  # spec.library   = "iconv"
-  # spec.libraries = "iconv", "xml2"
+  # s.library   = "iconv"
+  # s.libraries = "iconv", "xml2"
 
 
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -130,9 +130,9 @@ Pod::Spec.new do |spec|
   #  where they will only apply to your library. If you depend on other Podspecs
   #  you can include multiple dependencies to ensure it works.
 
-  # spec.requires_arc = true
+  # s.requires_arc = true
 
-  # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  # spec.dependency "JSONKit", "~> 1.4"
+  # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
+  # s.dependency "JSONKit", "~> 1.4"
 
 end
