@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "CHZLogView"
-  s.version      = "v0.0.1"
+  s.version      = "0.0.1"
   s.summary      = "Print and view logs on App easily"
 
   # This description is used to generate tags and improve search results.
