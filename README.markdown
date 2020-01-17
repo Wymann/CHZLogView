@@ -49,4 +49,4 @@ APPLogWithFormat(@".....:%@", string);
 4. Double-clicking on the LogView can clear all logs.
 
 ## Screenshot
-![image](https://github.com/Wymann/CHZLogView/blob/master/Screenshot/0.jpg)
+![image](https://github.com/Wymann/CHZLogView/blob/master/Screenshot/0.JPG)
