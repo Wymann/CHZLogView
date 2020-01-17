@@ -30,3 +30,16 @@ $ pod install
 Then open the `.xcworkspace` rather than the `.xcodeproj`.
 
 For more information on Cocoapods visit https://cocoapods.org.
+
+## How to use
+
+Import header file
+```
+#import <CHZLogView.h>
+```
+Method
+```
+APPLogWithFormat(@".....:%@", string);
+```
+
+## Screenshot
