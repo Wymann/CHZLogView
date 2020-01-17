@@ -42,4 +42,10 @@ Method
 APPLogWithFormat(@".....:%@", string);
 ```
 
+## Gestures Tips
+1. Show or hide LogView by clicking floating button.
+2. Touch-hold floating button to close CHZLogView.
+3. You can drag floating button to its right place.
+4. Double-clicking on the LogView can clear all logs.
+
 ## Screenshot
