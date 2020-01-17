@@ -9,13 +9,13 @@ If you haven't done so already, you might want to initialize the project, to hav
 $ pod init
 ```
 
-Then, edit the `Podfile`, adding `FMDB`:
+Then, edit the `Podfile`, adding `CHZLogView`:
 
 ```ruby
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
-target 'MyApp' do
+target 'MyAppName' do
     pod 'CHZLogView'
 end
 ```
