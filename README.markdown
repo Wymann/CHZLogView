@@ -1,6 +1,7 @@
 # CHZLogView
 Print and view logs on your APP easily. 一行代码输出日志到App上。
 
+## Installing
 CHZLogView can be installed using [CocoaPods](https://cocoapods.org/).
 
 If you haven't done so already, you might want to initialize the project, to have it produce a `Podfile` template for you:
