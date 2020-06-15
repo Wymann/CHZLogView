@@ -206,6 +206,9 @@ static CHZLogView *sharedPointer = nil;
 }
 
 - (void)inputText:(NSString *)text color:(UIColor *)color {
+    if (!_bottomView) {
+        [self setUI];
+    }
     NSString *string = [NSString stringWithFormat:@"%@\n%@",[self currentTimeString] , text];
     CHZLogModel *model = [[CHZLogModel alloc] init];
     model.log = string;
@@ -255,17 +258,21 @@ static CHZLogView *sharedPointer = nil;
 }
 
 - (void)closeLogView {
+    [self.logArray removeAllObjects];
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [weakSelf.dragView removeFromSuperview];
-        [weakSelf setDragView:nil];
-        
-        [weakSelf.bottomView removeFromSuperview];
-        [weakSelf setLogTableView:nil];
-        [weakSelf setBottomView:nil];
-        
-        [weakSelf.toastLabel removeFromSuperview];
-        [weakSelf setToastLabel:nil];
+        [UIView animateWithDuration:0.2 animations:^{
+            weakSelf.dragView.alpha = 0;
+            weakSelf.bottomView.alpha = 0;
+            weakSelf.logTableView.alpha = 0;
+        }completion:^(BOOL finished) {
+            [weakSelf.dragView removeFromSuperview];
+            [weakSelf setDragView:nil];
+            
+            [weakSelf.bottomView removeFromSuperview];
+            [weakSelf setLogTableView:nil];
+            [weakSelf setBottomView:nil];
+        }];
     });
 }
 
