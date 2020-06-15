@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0473766F249328C600C99811 /* CHZLogModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473766E249328C600C99811 /* CHZLogModel.m */; };
+		047376722493305D00C99811 /* CHZLogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047376712493305D00C99811 /* CHZLogCell.m */; };
 		F646727823CEFD0B000587FB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F646727723CEFD0B000587FB /* AppDelegate.m */; };
 		F646727B23CEFD0B000587FB /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F646727A23CEFD0B000587FB /* SceneDelegate.m */; };
 		F646727E23CEFD0B000587FB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F646727D23CEFD0B000587FB /* ViewController.m */; };
@@ -32,6 +34,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0473766D249328C600C99811 /* CHZLogModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHZLogModel.h; sourceTree = "<group>"; };
+		0473766E249328C600C99811 /* CHZLogModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHZLogModel.m; sourceTree = "<group>"; };
+		047376702493305D00C99811 /* CHZLogCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHZLogCell.h; sourceTree = "<group>"; };
+		047376712493305D00C99811 /* CHZLogCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHZLogCell.m; sourceTree = "<group>"; };
 		F646727323CEFD0B000587FB /* CHZLogViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CHZLogViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F646727623CEFD0B000587FB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F646727723CEFD0B000587FB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -134,6 +140,10 @@
 				F6BABA5323CF0B550031CA24 /* CHZLogView.m */,
 				F6BABA5423CF0B550031CA24 /* WMDragView.h */,
 				F6BABA5223CF0B550031CA24 /* WMDragView.m */,
+				0473766D249328C600C99811 /* CHZLogModel.h */,
+				0473766E249328C600C99811 /* CHZLogModel.m */,
+				047376702493305D00C99811 /* CHZLogCell.h */,
+				047376712493305D00C99811 /* CHZLogCell.m */,
 			);
 			path = CHZLogView;
 			sourceTree = "<group>";
@@ -238,6 +248,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				047376722493305D00C99811 /* CHZLogCell.m in Sources */,
+				0473766F249328C600C99811 /* CHZLogModel.m in Sources */,
 				F646727E23CEFD0B000587FB /* ViewController.m in Sources */,
 				F646727823CEFD0B000587FB /* AppDelegate.m in Sources */,
 				F6BABA5A23CF149D0031CA24 /* FirstViewController.m in Sources */,
@@ -406,6 +418,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "${SRCROOT}/CHZLogViewDemo/PrefixHeader.pch";
 				INFOPLIST_FILE = CHZLogViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -425,6 +438,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "${SRCROOT}/CHZLogViewDemo/PrefixHeader.pch";
 				INFOPLIST_FILE = CHZLogViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
