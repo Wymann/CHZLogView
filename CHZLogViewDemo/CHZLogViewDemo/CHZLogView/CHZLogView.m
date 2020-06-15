@@ -8,26 +8,19 @@
 
 #import "CHZLogView.h"
 #import "WMDragView.h"
+#import "CHZLogCell.h"
 
-#define CHZ_SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width //手机屏幕宽
-#define CHZ_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height //手机屏幕高
-static const CGFloat dragWidth = 60.0;
-static const CGFloat dragHeight = 60.0;
-static const CGFloat bottomHeight = 250.0;
-static const CGFloat topGap = 10.0;
-static const CGFloat rightGap = 10.0;
-static const CGFloat leftGap = 10.0;
-static const CGFloat bottomGap = 10.0;
-
-@interface CHZLogView()
+@interface CHZLogView()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic) BOOL firstInput;
 @property (nonatomic, strong) WMDragView *dragView;
+@property (nonatomic, strong) UILabel *toastLabel;
 @property (nonatomic, strong) UIView *bottomView;
-@property (nonatomic, strong) UITextView *logTextView;
+@property (nonatomic, strong) UITableView *logTableView;
 @property (nonatomic) CGRect bottomFrame;
 @property (nonatomic) CGRect textViewFrame;
-@property (nonatomic, strong) NSMutableArray <NSString *>*logArray;
+@property (nonatomic, strong) NSMutableArray <CHZLogModel *>*logArray;
+@property (nonatomic, assign) BOOL isInputting;
 
 @end
 
@@ -139,21 +132,21 @@ static CHZLogView *sharedPointer = nil;
         }
         [keyView addSubview:_bottomView];
         
-        _logTextView = [[UITextView alloc] initWithFrame:_textViewFrame];
-        _logTextView.layoutManager.allowsNonContiguousLayout = NO;
-        _logTextView.backgroundColor = _bottomView.backgroundColor;
-        _logTextView.textColor = [UIColor whiteColor];
-        _logTextView.editable = NO;
-        _logTextView.alwaysBounceVertical = YES;
-        _logTextView.layer.cornerRadius = 5.0;
-        _logTextView.clipsToBounds = YES;
-        [_bottomView addSubview:_logTextView];
+        _logTableView = [[UITableView alloc] initWithFrame:_textViewFrame style:UITableViewStyleGrouped];
+        _logTableView.backgroundColor = _bottomView.backgroundColor;
+        _logTableView.layer.cornerRadius = 5.0;
+        _logTableView.clipsToBounds = YES;
+        _logTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _logTableView.delegate = self;
+        _logTableView.dataSource = self;
+        [_logTableView registerClass:[CHZLogCell class] forCellReuseIdentifier:@"CHZLogCell"];
+        [_bottomView addSubview:_logTableView];
         _bottomView.clipsToBounds = YES;
         
         //双击清空日志
         UITapGestureRecognizer *tapGest = [[UITapGestureRecognizer alloc] init];
         tapGest.numberOfTapsRequired = 2;
-        [_logTextView addGestureRecognizer:tapGest];
+        [_logTableView addGestureRecognizer:tapGest];
         [tapGest addTarget:self action:@selector(clearLog)];
         
         [keyView bringSubviewToFront:self.dragView];
@@ -162,7 +155,28 @@ static CHZLogView *sharedPointer = nil;
     return _bottomView;
 }
 
--(NSMutableArray<NSString *> *)logArray {
+-(UILabel *)toastLabel {
+    if (!_toastLabel) {
+        _toastLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(self.bottomView.frame) - toastHeight - 10.0, toastWidth, toastHeight)];
+        _toastLabel.backgroundColor = self.bottomView.backgroundColor;
+        _toastLabel.textColor = [UIColor whiteColor];
+        _toastLabel.textAlignment = NSTextAlignmentCenter;
+        _toastLabel.font = [UIFont systemFontOfSize:13.0];
+        _toastLabel.alpha = 0;
+        _toastLabel.layer.cornerRadius = 5.0;
+        _toastLabel.clipsToBounds = YES;
+        UIView *keyView;
+        if (@available(iOS 13.0, *)) {
+            keyView = [[UIApplication sharedApplication].windows firstObject];
+        } else {
+            keyView = [UIApplication sharedApplication].keyWindow;
+        }
+        [keyView addSubview:_toastLabel];
+    }
+    return _toastLabel;
+}
+
+-(NSMutableArray<CHZLogModel *> *)logArray {
     if (!_logArray) {
         _logArray = [NSMutableArray array];
     }
@@ -181,48 +195,25 @@ static CHZLogView *sharedPointer = nil;
 }
 
 - (void)closeLog {
+    __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
+        [weakSelf hideToast];
         [UIView animateWithDuration:0.2 animations:^{
-            self.bottomView.alpha = 0.0;
-            self.bottomView.frame = self.dragView.frame;
+            weakSelf.bottomView.alpha = 0.0;
+            weakSelf.bottomView.frame = weakSelf.dragView.frame;
         }];
     });
 }
 
 - (void)inputText:(NSString *)text color:(UIColor *)color {
+    NSString *string = [NSString stringWithFormat:@"%@\n%@",[self currentTimeString] , text];
+    CHZLogModel *model = [[CHZLogModel alloc] init];
+    model.log = string;
+    model.color = color;
+    [self.logArray addObject:model];
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (!self->_dragView) {
-            self.dragView.isKeepBounds = YES;
-            [self bottomView];
-        }
-        
-        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithAttributedString:self->_logTextView.attributedText];
-        
-        NSString *string;
-        if (self.firstInput) {
-            string = [NSString stringWithFormat:@"Welcome to CHZLogView\n\n%@\n%@",[self currentTimeString] , text];
-        } else {
-            string = [NSString stringWithFormat:@"\n%@\n%@",[self currentTimeString] , text];
-        }
-        
-        [self.logArray addObject:string];
-        
-        NSMutableAttributedString *addAttString = [[NSMutableAttributedString alloc] initWithString:string];
-        UIColor *addColor = color ? color : [UIColor whiteColor];
-        [addAttString addAttribute:NSForegroundColorAttributeName value:addColor range:NSMakeRange(0, string.length)];
-        if (self.firstInput) {
-            [addAttString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:[string rangeOfString:@"Welcome to CHZLogView"]];
-            self.firstInput = NO;
-        }
-        [addAttString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0] range:NSMakeRange(0, string.length)];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.lineSpacing = 3;// 字体的行间距
-        [addAttString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, string.length)];
-        
-        [attString appendAttributedString:addAttString];
-        self.logTextView.attributedText = attString;
-        
-        [self.logTextView scrollRangeToVisible:NSMakeRange(self.logTextView.text.length, 1)];
+        [self.logTableView reloadData];
+        [self.logTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.logArray.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     });
 }
 
@@ -252,27 +243,107 @@ static CHZLogView *sharedPointer = nil;
 - (void)clearLog {
     _firstInput = YES;
     [self.logArray removeAllObjects];
+    NSString *string = [NSString stringWithFormat:@"%@\n清空日志",[self currentTimeString]];
+    CHZLogModel *model = [[CHZLogModel alloc] init];
+    model.log = string;
+    model.color = [UIColor redColor];
+    [self.logArray addObject:model];
+    __weak typeof (self)weakself = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.logTextView setText:@""];
-        [self.logTextView setAttributedText:nil];
+        [weakself.logTableView reloadData];
     });
-    
-    [self inputText:@"清空日志成功\n" color:[UIColor redColor]];
 }
 
 - (void)closeLogView {
+    __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.dragView removeFromSuperview];
-        [self setDragView:nil];
+        [weakSelf.dragView removeFromSuperview];
+        [weakSelf setDragView:nil];
         
-        [self.bottomView removeFromSuperview];
-        [self setLogTextView:nil];
-        [self setBottomView:nil];
+        [weakSelf.bottomView removeFromSuperview];
+        [weakSelf setLogTableView:nil];
+        [weakSelf setBottomView:nil];
+        
+        [weakSelf.toastLabel removeFromSuperview];
+        [weakSelf setToastLabel:nil];
     });
 }
 
 - (void)logObject:(id)object{
     [self inputObject:object color:nil];
+}
+
+- (void)showToast:(NSString *)toast {
+    self.toastLabel.text = toast;
+    __weak typeof(self) weakSelf = self;
+    [UIView animateWithDuration:0.2 animations:^{
+        weakSelf.toastLabel.alpha = 1.0;
+    }completion:^(BOOL finished) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf hideToast];
+        });
+    }];
+}
+
+- (void)hideToast {
+    if (_toastLabel) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.toastLabel.alpha = 0.0;
+        }completion:^(BOOL finished) {
+            [self.toastLabel removeFromSuperview];
+            [self setToastLabel:nil];
+        }];
+    }
+}
+
+#pragma mark - tableViewDelegate & tableViewDatasource
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.logArray.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CHZLogCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CHZLogCell"];
+    if (!cell) {
+        cell = [[CHZLogCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CHZLogCell"];
+    }
+    cell.model = self.logArray[indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.backgroundColor = [UIColor clearColor];
+    __weak typeof (self)weakself = self;
+    cell.pastBlock = ^{
+        [weakself showToast:@"复制成功！"];
+    };
+    return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CHZLogModel *model = self.logArray[indexPath.row];
+    CGFloat cellHeight = [CHZLogCell textHeightWithAttributedText:model.attributedString Width:CHZ_SCREEN_WIDTH - leftGap - rightGap - textLeftGap - textRightGap];
+    return cellHeight + textTopGap + textBottomGap;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return CGFLOAT_MIN;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 10.0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return nil;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return nil;
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self hideToast];
 }
 
 @end

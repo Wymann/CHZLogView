@@ -87,7 +87,7 @@
     //初始化一个长按手势
     UILongPressGestureRecognizer *longPressGest = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressView:)];
     //长按等待时间
-    longPressGest.minimumPressDuration = 2;
+    longPressGest.minimumPressDuration = 1.5;
     [self addGestureRecognizer:longPressGest];
     
     //添加移动手势可以拖动
